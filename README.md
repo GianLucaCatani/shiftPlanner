@@ -1,6 +1,6 @@
 # ShiftPlanner
 
-ShiftPlanner is an application developed for the Ingegneria del Software e Progettazione Web course at the University of Roma Tor Vergata. The application allows coordinators to automatically generate work shift schedules for employees, taking into account weekly contractual hours, absences, and employee preferences. Employees can log in to view their assigned shifts and notifications.
+The application allows coordinators to automatically generate work shift schedules for employees, taking into account weekly contractual hours, absences, and employee preferences. Employees can log in to view their assigned shifts and notifications.
 
 ## Implemented Use Cases
 
