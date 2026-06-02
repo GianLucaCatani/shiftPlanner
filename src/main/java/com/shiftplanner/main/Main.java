@@ -10,13 +10,31 @@ import com.shiftplanner.view.cli.EmployeeDashboardView;
 import com.shiftplanner.view.cli.GenerateScheduleView;
 import com.shiftplanner.view.cli.LoginView;
 
+import java.io.InputStream;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 public class Main {
+	
+	private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+	
+	static {
+        // Carica la configurazione del logger da logging.properties (classpath)
+        try (InputStream config = Main.class.getClassLoader()
+                .getResourceAsStream("logging.properties")) {
+            if (config != null) {
+                LogManager.getLogManager().readConfiguration(config);
+            }
+        } catch (Exception e) {
+            // Se fallisce usiamo la configurazione di default della JVM
+        }
+    }
 
     public static void main(String[] args) {
 
-        System.out.println("   SHIFT PLANNER - Avvio Applicazione   ");
+    	LOGGER.info("   SHIFT PLANNER - Avvio Applicazione   ");
       
         try {
             //Legge config.properties e crea la Factory corretta
@@ -33,13 +51,13 @@ public class Main {
 
             //Chiede all'utente quale interfaccia avviare
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Scegli l'interfaccia da avviare:");
-            System.out.println("  [1] JavaFX (Grafica)");
-            System.out.println("  [2] CLI (Riga di Comando)");
-            System.out.print("\nScelta: ");
+            LOGGER.info("Scegli l'interfaccia da avviare:");
+            LOGGER.info("  [1] JavaFX (Grafica)");
+            LOGGER.info("  [2] CLI (Riga di Comando)");
+            LOGGER.info("\nScelta: ");
             String choice = scanner.nextLine().trim();
 
-            System.out.println();
+            LOGGER.info("");
 
             if ("1".equals(choice)) {
             	//Avvio JavaFX
@@ -58,8 +76,7 @@ public class Main {
             }
 
         } catch (Exception e) {
-            System.err.println("\n ERRORE FATALE all'avvio: " + e.getMessage());
-            e.printStackTrace();
+        	LOGGER.log(Level.SEVERE, "ERRORE FATALE all'avvio: " + e.getMessage(), e);
         }
     }
 }

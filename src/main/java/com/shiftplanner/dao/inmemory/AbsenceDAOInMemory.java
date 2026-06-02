@@ -7,7 +7,6 @@ import com.shiftplanner.model.Absence;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AbsenceDAOInMemory implements AbsenceDAO {
 
@@ -18,6 +17,6 @@ public class AbsenceDAOInMemory implements AbsenceDAO {
         // Usa gli stream di Java per filtrare solo le assenze che ricadono nel periodo
         return DB.stream()
                 .filter(a -> !(a.getEndDate().isBefore(startDate) || a.getStartDate().isAfter(endDate)))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

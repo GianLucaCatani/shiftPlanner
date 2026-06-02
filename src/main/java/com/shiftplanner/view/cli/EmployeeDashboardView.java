@@ -1,6 +1,8 @@
 package com.shiftplanner.view.cli;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.shiftplanner.bean.NotificationBean;
 import com.shiftplanner.bean.ShiftBean;
@@ -12,6 +14,8 @@ import com.shiftplanner.exceptions.ShiftPlannerException;
 //Mostra i turni assegnati e le notifiche dell'utente autenticato.
 public class EmployeeDashboardView {
 
+    private static final Logger LOGGER = Logger.getLogger(EmployeeDashboardView.class.getName());
+
     private final EmployeeDashboardController dashboardController;
 
     public EmployeeDashboardView(DAOFactory daoFactory) {
@@ -19,52 +23,53 @@ public class EmployeeDashboardView {
     }
 
     public void start(long employeeId) {
-        System.out.println("\n========================================");
-        System.out.println("     SHIFT PLANNER — DASHBOARD          ");
-        System.out.println("========================================");
+        LOGGER.info("\n========================================");
+        LOGGER.info("     SHIFT PLANNER — DASHBOARD          ");
+        LOGGER.info("========================================");
 
         showMyShifts(employeeId);
         showMyNotifications(employeeId);
 
-        System.out.println("\n========================================");
-        System.out.println("  Premi INVIO per fare logout...");
-        System.out.println("========================================");
+        LOGGER.info("\n========================================");
+        LOGGER.info("  Premi INVIO per fare logout...");
+        LOGGER.info("========================================");
+        // Il metodo termina: LoginView rileva il ritorno e ripresenta il login
     }
 
     private void showMyShifts(long employeeId) {
-        System.out.println("\n--- I TUOI TURNI ---");
+        LOGGER.info("\n--- I TUOI TURNI ---");
         try {
             List<ShiftBean> shifts = dashboardController.getMyShifts(employeeId);
             if (shifts.isEmpty()) {
-                System.out.println("  Nessun turno assegnato al momento.");
+                LOGGER.info("  Nessun turno assegnato al momento.");
                 return;
             }
-            System.out.printf("  %-12s %-8s %-8s%n", "DATA", "INIZIO", "FINE");
-            System.out.println("  --------------------------------");
+            LOGGER.info(String.format("  %-12s %-8s %-8s%n", "DATA", "INIZIO", "FINE"));
+            LOGGER.info("  --------------------------------");
             for (ShiftBean shift : shifts) {
-                System.out.printf("  %-12s %-8s %-8s%n",
+                LOGGER.info(String.format("  %-12s %-8s %-8s%n",
                         shift.getDate(),
                         shift.getStartTime(),
-                        shift.getEndTime());
+                        shift.getEndTime()));
             }
         } catch (ShiftPlannerException e) {
-            System.out.println("  ERRORE: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Errore nel caricamento dei turni", e);
         }
     }
 
     private void showMyNotifications(long employeeId) {
-        System.out.println("\n--- LE TUE NOTIFICHE ---");
+        LOGGER.info("\n--- LE TUE NOTIFICHE ---");
         try {
             List<NotificationBean> notifications = dashboardController.getMyNotifications(employeeId);
             if (notifications.isEmpty()) {
-                System.out.println("  Nessuna notifica.");
+                LOGGER.info("  Nessuna notifica.");
                 return;
             }
             for (NotificationBean n : notifications) {
-                System.out.println("  • " + n.getMessage());
+                LOGGER.info("  • " + n.getMessage());
             }
         } catch (ShiftPlannerException e) {
-            System.out.println("  ERRORE: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Errore nel caricamento delle notifiche", e);
         }
     }
 }

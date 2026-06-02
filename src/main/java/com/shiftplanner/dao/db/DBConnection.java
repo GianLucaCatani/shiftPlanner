@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class DBConnection {
+	
+	private static final Logger LOGGER = Logger.getLogger(DBConnection.class.getName());
     
     private static  String url;
     private static  String user;
@@ -17,7 +20,7 @@ public class DBConnection {
     static {
     	try (InputStream input = DBConnection.class.getClassLoader().getResourceAsStream("db.properties")){
     		if (input == null) {
-    			System.err.println("Errore CRITICO: Impossibile trovare il file db.properties");
+    			LOGGER.severe("Errore CRITICO: Impossibile trovare il file db.properties");
     		} else {
     			Properties prop = new Properties();
     			prop.load(input); //Carica tutte le chiavi dal file
@@ -27,7 +30,7 @@ public class DBConnection {
     			password = prop.getProperty("PASS");
     		}
     	} catch(Exception e) {
-    		e.printStackTrace();
+    		LOGGER.log(Level.SEVERE, "Errore durante il caricamento di db.properties", e);
     	}
     }
     

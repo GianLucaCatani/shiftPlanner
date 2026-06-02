@@ -35,6 +35,8 @@ import javafx.stage.Stage;
     → notifiche inviate, stato PUBLISHED
 */
 public class GenerateScheduleGUIControllerFX {
+	
+	private static final String FXML_LOGIN = "/com/shiftplanner/view/fx/LoginView.fxml";
 
     @FXML private TextField startDateField;
     @FXML private TextField endDateField;
@@ -252,7 +254,7 @@ public class GenerateScheduleGUIControllerFX {
     private void onLogoutClicked() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/shiftplanner/view/fx/LoginView.fxml"));
+                    getClass().getResource(FXML_LOGIN));
             Parent root = loader.load();
 
             LoginGUIControllerFX loginCtrl = loader.getController();

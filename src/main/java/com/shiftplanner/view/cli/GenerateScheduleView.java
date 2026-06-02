@@ -1,6 +1,8 @@
-package com.shiftplanner.view.cli;
+ package com.shiftplanner.view.cli;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.shiftplanner.bean.ScheduleBean;
 import com.shiftplanner.bean.ShiftBean;
@@ -8,112 +10,114 @@ import com.shiftplanner.controller.gui.cli.GenerateScheduleGUIControllerCLI;
 import com.shiftplanner.exceptions.ShiftPlannerException;
 
 public class GenerateScheduleView {
-	
-	private final GenerateScheduleGUIControllerCLI graphicController;
-	
-	public GenerateScheduleView(GenerateScheduleGUIControllerCLI graphicController) {
-		this.graphicController = graphicController;
-	}
-	
-	public void start() {
+
+    private static final Logger LOGGER = Logger.getLogger(GenerateScheduleView.class.getName());
+
+    private final GenerateScheduleGUIControllerCLI graphicController;
+
+    public GenerateScheduleView(GenerateScheduleGUIControllerCLI graphicController) {
+        this.graphicController = graphicController;
+    }
+
+    public void start() {
         Scanner scanner = new Scanner(System.in);
-        
-        System.out.println("   SHIFT PLANNER - GENERAZIONE TURNI    ");
-        
+
+        LOGGER.info("   SHIFT PLANNER - GENERAZIONE TURNI    ");
+
         try {
-            System.out.print("Inserisci la Data di Inizio (YYYY-MM-DD): ");
+            LOGGER.info("Inserisci la Data di Inizio (YYYY-MM-DD): ");
             String startDate = scanner.nextLine();
-            
-            System.out.print("Inserisci la Data di Fine   (YYYY-MM-DD): ");
+
+            LOGGER.info("Inserisci la Data di Fine   (YYYY-MM-DD): ");
             String endDate = scanner.nextLine();
-            
-            System.out.println("\nElaborazione in corso... Attendi...");
-            
+
+            LOGGER.info("\nElaborazione in corso... Attendi...");
+
             // 1. Genera la Bozza
             ScheduleBean draft = graphicController.generateSchedule(startDate, endDate);
             long draftId = draft.getScheduleId();
             displaySchedule(draft);
-            System.out.println("\n[BOZZA GENERATA CON SUCCESSO]");
-            
+            LOGGER.info("\n[BOZZA GENERATA CON SUCCESSO]");
+
             // 2. Loop di Modifica Manuale (Opzionale)
             while (true) {
-                System.out.print("\nVuoi modificare l'assegnazione di un turno? (s/n): ");
-                String choice = scanner.nextLine().trim().toLowerCase();
-                
-                if (choice.equals("n")) {
+                LOGGER.info("\nVuoi modificare l'assegnazione di un turno? (s/n): ");
+                String choice = scanner.nextLine().trim();
+
+                if ("n".equalsIgnoreCase(choice)) {
                     break;
-                } else if (choice.equals("s")) {
-                    System.out.print("Inserisci l'indice del turno (es. 0 per la prima riga): ");
+                } else if ("s".equalsIgnoreCase(choice)) {
+                    LOGGER.info("Inserisci l'indice del turno (es. 0 per la prima riga): ");
                     int shiftIndex = Integer.parseInt(scanner.nextLine().trim());
-                    
-                    System.out.print("Inserisci l'ID del NUOVO dipendente da assegnare: ");
+
+                    LOGGER.info("Inserisci l'ID del NUOVO dipendente da assegnare: ");
                     long newEmployeeId = Long.parseLong(scanner.nextLine().trim());
-                    
+
                     draft = graphicController.modifyShift(draftId, shiftIndex, newEmployeeId);
                     displaySchedule(draft);
-                    System.out.println("\n[TURNO MODIFICATO CON SUCCESSO]");
+                    LOGGER.info("\n[TURNO MODIFICATO CON SUCCESSO]");
                 }
             }
-            
+
             // 3. Pubblicazione
-            System.out.print("\nVuoi PUBBLICARE il calendario definitivo? (s/n): ");
-            if (scanner.nextLine().trim().toLowerCase().equals("s")) {
+            LOGGER.info("\nVuoi PUBBLICARE il calendario definitivo? (s/n): ");
+            if (scanner.nextLine().trim().equalsIgnoreCase("s")) {
                 ScheduleBean published = graphicController.publishSchedule(draftId);
                 displaySchedule(published);
-                System.out.println("\n========================================");
-                System.out.println("  Calendario pubblicato con successo!");
-                System.out.println("  I dipendenti sono stati notificati.");
-                System.out.println("========================================");
+                LOGGER.info("\n========================================");
+                LOGGER.info("  Calendario pubblicato con successo!");
+                LOGGER.info("  I dipendenti sono stati notificati.");
+                LOGGER.info("========================================");
             } else {
-                System.out.println("\n[Operazione annullata. La bozza è stata scartata.]");
+                LOGGER.info("\n[Operazione annullata. La bozza è stata scartata.]");
             }
-            
+
             // Logout
-            System.out.print("\nVuoi fare logout? (s/n): ");
-            if (!scanner.nextLine().trim().toLowerCase().equals("s")) {
+            LOGGER.info("\nVuoi fare logout? (s/n): ");
+            if (!scanner.nextLine().trim().equalsIgnoreCase("s")) {
                 // L'utente vuole restare: ricomincia il flusso di generazione
                 start();
             }
             // Se risponde "s" il metodo termina e LoginView ripresenta il login
-            
+
         } catch (ShiftPlannerException e) {
-            System.out.println("\nERRORE: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Errore ShiftPlanner", e);
         } catch (NumberFormatException e) {
-            System.out.println("\nERRORE: Inserisci un numero valido.");
+            LOGGER.log(Level.SEVERE, "Inserisci un numero valido.", e);
         } catch (Exception e) {
-            System.out.println("\nERRORE CRITICO: Si è verificato un errore di sistema.");
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "ERRORE CRITICO: Si è verificato un errore di sistema.", e);
         }
-	}
-	
-	//Stampa il calendario generato in formato tabellare
+    }
+
+    //Stampa il calendario generato in formato tabellare
     private void displaySchedule(ScheduleBean schedule) {
-      
-        System.out.printf("  Periodo : %s → %s%n",
-                schedule.getStartDate(), schedule.getEndDate());
-        System.out.printf("  Stato   : %s%n", schedule.getStatus());
-        System.out.printf("  Turni   : %d%n", schedule.getShifts().size());
-        System.out.println("----------------------------------------");
-        System.out.printf("  %-12s %-10s %-8s %-8s %-20s%n",
-                "DATA", "SLOT", "INIZIO", "FINE", "DIPENDENTE");
-        System.out.println("----------------------------------------");
+
+        LOGGER.info(String.format("  Periodo : %s → %s%n",
+                schedule.getStartDate(), schedule.getEndDate()));
+        LOGGER.info(String.format("  Stato   : %s%n", schedule.getStatus()));
+        LOGGER.info(String.format("  Turni   : %d%n", schedule.getShifts().size()));
+        LOGGER.info("----------------------------------------");
+        LOGGER.info(String.format("  %-12s %-10s %-8s %-8s %-20s%n",
+                "DATA", "SLOT", "INIZIO", "FINE", "DIPENDENTE"));
+        LOGGER.info("----------------------------------------");
 
         for (ShiftBean shift : schedule.getShifts()) {
             String employeeName = (shift.getEmployee() != null)
                     ? shift.getEmployee().getFullName()
                     : "*** NON ASSEGNATO ***";
 
-            System.out.printf("  %-12s %-10s %-8s %-8s %-20s%n",
+            LOGGER.info(String.format("  %-12s %-10s %-8s %-8s %-20s%n",
                     shift.getDate(),
                     getSlotLabel(shift),
                     shift.getStartTime(),
                     shift.getEndTime(),
-                    employeeName);
+                    employeeName));
         }
-        System.out.println("========================================");
+
+        LOGGER.info("========================================");
     }
 
-    
+
     private String getSlotLabel(ShiftBean shift) {
         if (shift.getStartTime() == null) return "-";
         int hour = shift.getStartTime().getHour();

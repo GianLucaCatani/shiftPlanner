@@ -7,7 +7,6 @@ import com.shiftplanner.model.EmployeePreference;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PreferenceDAOInMemory implements PreferenceDAO {
 
@@ -21,7 +20,7 @@ public class PreferenceDAOInMemory implements PreferenceDAO {
                     LocalDate date = p.getPreferredDate();
                     return !date.isBefore(startDate) && !date.isAfter(endDate);
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
     
     //Aggiunge una preferenza in memoria.

@@ -8,8 +8,6 @@ public class EmployeeBean {
     private String role; // String al posto di EmployeeRole
     private int contractWeeklyHours;
     
-    public EmployeeBean() {}
-    
     public long getEmployeeId() { return employeeId; }
     public void setEmployeeId(long employeeId) { 
     	this.employeeId = employeeId; 

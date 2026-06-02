@@ -11,8 +11,6 @@ public class ShiftBean {
 	    private LocalTime endTime;
 	    private EmployeeBean employee;
 	    
-	    public ShiftBean() {}
-	    
 	    public long getShiftId() { return shiftId; }
 	    public void setShiftId(long shiftId) { 
 	    	this.shiftId = shiftId; 

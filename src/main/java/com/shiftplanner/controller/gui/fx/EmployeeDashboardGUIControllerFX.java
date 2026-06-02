@@ -28,6 +28,8 @@ import java.util.List;
  * Mostra i turni assegnati e le notifiche dell'utente autenticato.
  */
 public class EmployeeDashboardGUIControllerFX {
+	
+	private static final String FXML_LOGIN = "/com/shiftplanner/view/fx/LoginView.fxml";
 
     @FXML private Label welcomeLabel;
 
@@ -109,7 +111,7 @@ public class EmployeeDashboardGUIControllerFX {
     private void onLogoutClicked() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/shiftplanner/view/fx/LoginView.fxml"));
+                    getClass().getResource(FXML_LOGIN));
             Parent root = loader.load();
 
             LoginGUIControllerFX loginCtrl = loader.getController();

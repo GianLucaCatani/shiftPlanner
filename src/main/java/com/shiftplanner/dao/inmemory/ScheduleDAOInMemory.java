@@ -5,17 +5,19 @@ import com.shiftplanner.exceptions.dao.DAOException;
 import com.shiftplanner.model.Schedule;
 import com.shiftplanner.model.Shift;
 
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleDAOInMemory implements ScheduleDAO {
 
+    private static final Logger LOGGER = Logger.getLogger(ScheduleDAOInMemory.class.getName());	
     private static final List<Schedule> DB = new ArrayList<>();
 
     @Override
     public void saveSchedule(Schedule schedule) throws DAOException {
         DB.add(schedule);
-        System.out.println("(DEMO) Schedule salvato in memoria RAM. Totale turni salvati: " + schedule.getShifts().size());
+        LOGGER.info("(DEMO) Schedule salvato in memoria RAM. Totale turni salvati: " + schedule.getShifts().size());
     }
     
     @Override

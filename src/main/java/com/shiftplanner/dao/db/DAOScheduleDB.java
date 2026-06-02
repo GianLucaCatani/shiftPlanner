@@ -51,9 +51,8 @@ public class DAOScheduleDB implements ScheduleDAO {
             // 2. Salviamo la lista dei Turni (Shifts) collegati a questo Schedule
             // Inserisce i turni usando l'ID reale recuperato
             try (PreparedStatement shiftStmt = conn.prepareStatement(insertShiftQuery)) {
-                for (Shift shift : schedule.getShifts()) {
-                	
-                	shiftStmt.setLong(1, generatedScheduleId); // Chiave esterna verso schedules.id
+            	shiftStmt.setLong(1, generatedScheduleId); // Chiave esterna verso schedules.id (è costante per tutti i turni di questo schedule)
+            	for (Shift shift : schedule.getShifts()) {
                     shiftStmt.setDate(2, java.sql.Date.valueOf(shift.getDate()));
                     shiftStmt.setTime(3, java.sql.Time.valueOf(shift.getStartTime()));
                     shiftStmt.setTime(4, java.sql.Time.valueOf(shift.getEndTime()));

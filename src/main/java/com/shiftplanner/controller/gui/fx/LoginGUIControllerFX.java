@@ -20,6 +20,10 @@ import javafx.stage.Stage;
 //Controller GUI JavaFX per il login.
 //Dopo l'autenticazione instrada l'utente alla view corretta.
 public class LoginGUIControllerFX {
+	
+	private static final String ROLE_COORDINATOR = "COORDINATOR";
+	private static final String FXML_COORDINATOR  = "/com/shiftplanner/view/fx/GenerateScheduleView.fxml";
+    private static final String FXML_EMPLOYEE     = "/com/shiftplanner/view/fx/EmployeeDashboardView.fxml";
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
@@ -62,16 +66,16 @@ public class LoginGUIControllerFX {
     private void openDashboard(UserBean user) {
         try {
             String fxmlPath;
-            if ("COORDINATOR".equals(user.getRole())) {
-                fxmlPath = "/com/shiftplanner/view/fx/GenerateScheduleView.fxml";
+            if (ROLE_COORDINATOR.equals(user.getRole())) {
+                fxmlPath = FXML_COORDINATOR;
             } else {
-                fxmlPath = "/com/shiftplanner/view/fx/EmployeeDashboardView.fxml";
+                fxmlPath = FXML_EMPLOYEE;
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            if ("COORDINATOR".equals(user.getRole())) {
+            if (ROLE_COORDINATOR.equals(user.getRole())) {
                 GenerateScheduleGUIControllerFX ctrl = loader.getController();
                 ctrl.initDependencies(daoFactory, notificationManager);
             } else {
@@ -81,7 +85,7 @@ public class LoginGUIControllerFX {
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setTitle("ShiftPlanner — " +
-                    ("COORDINATOR".equals(user.getRole()) ? "Generazione Turni" : "Dashboard Dipendente"));
+                    (ROLE_COORDINATOR.equals(user.getRole()) ? "Generazione Turni" : "Dashboard Dipendente"));
             stage.setScene(new Scene(root));
             stage.setResizable(false);
 

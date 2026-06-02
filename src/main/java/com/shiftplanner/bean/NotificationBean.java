@@ -8,8 +8,6 @@ public class NotificationBean {
     private long employeeId;
     private LocalDateTime createAt;
 
-    public NotificationBean() {}
-
     public long getNotificationId() { return notificationId; }
     public void setNotificationId(long notificationId) { 
     	this.notificationId = notificationId; 

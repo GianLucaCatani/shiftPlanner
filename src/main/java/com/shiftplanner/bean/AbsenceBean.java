@@ -12,8 +12,6 @@ public class AbsenceBean {
     private String type; // String al posto di AbsenceType
     private EmployeeBean employee;
 
-    public AbsenceBean() {}
-
     public long getAbsenceId() { return absenceId; }
     public void setAbsenceId(long absenceId) { 
     	this.absenceId = absenceId; 

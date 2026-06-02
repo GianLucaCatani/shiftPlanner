@@ -9,8 +9,6 @@ public class UserBean {
     private long employeeId;
     private String role;   // "COORDINATOR" o "EMPLOYEE"
 
-    public UserBean() {}
-
     public long getUserId() { return userId; }
     public void setUserId(long userId) { 
     	this.userId = userId; 

@@ -10,8 +10,6 @@ public class PreferenceBean {
     private String timeSlot;     // String al posto dell'Enum TimeSlot
     private EmployeeBean employee;
 
-    public PreferenceBean() {}
-
     public long getPreferenceId() { return preferenceId; }
     public void setPreferenceId(long preferenceId) { 
     	this.preferenceId = preferenceId; 

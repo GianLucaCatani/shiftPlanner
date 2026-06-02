@@ -41,7 +41,7 @@ public class ScheduleGeneratorEngine {
 		while (!currentDate.isAfter(endDate)) {
 			
 			//1. ELABORATE PREFERENCES (Gestione preferenze incomplete o specifiche)
-			elaboratePreferences(schedule, currentDate, employees, absences, preferences, weeklyHoursMap);
+			elaboratePreferences(schedule, currentDate, absences, preferences, weeklyHoursMap);
 			
 			//2. APPLY DEFAULT (Assegnazione di default per slot non coperti dalle preferenze)
 			applyDefault(schedule, currentDate, employees, absences, weeklyHoursMap);
@@ -74,7 +74,7 @@ public class ScheduleGeneratorEngine {
 	
 	/*Logica per esaminare le EmployeePreference.
     Se un dipendente ha chiesto quel giorno/slot, e canAssign() è true, si crea lo Shift.*/
-	private void elaboratePreferences(Schedule schedule, LocalDate date, List<Employee> employees, List<Absence> absences, List<EmployeePreference> preferences, Map<Long, Map<Integer, Integer>> weeklyHoursMap) {
+	private void elaboratePreferences(Schedule schedule, LocalDate date, List<Absence> absences, List<EmployeePreference> preferences, Map<Long, Map<Integer, Integer>> weeklyHoursMap) {
 		//Scorre tutti gli slot della giornata
 		for (TimeSlot slot : TimeSlot.values()){
 			if (isSlotFilled(schedule, date, slot)) continue;
@@ -155,11 +155,7 @@ public class ScheduleGeneratorEngine {
         
         // 2. Controllo Ore Settimanali Contrattuali (per la settimana ISO della data)
         int currentWeekHours = getWeeklyHours(weeklyHoursMap, emp.getEmployeeId(), date);
-        if ((currentWeekHours + SHIFT_DURATION_HOURS) > emp.getContractWeeklyHours()) {
-            return false; // Ha già raggiunto il limite di ore per questa settimana
-        }
-        
-        return true;
+        return (currentWeekHours + SHIFT_DURATION_HOURS) <= emp.getContractWeeklyHours();
     }
     
     //Controlla se uno slot in una certa data ha già un dipendente assegnato

@@ -6,11 +6,16 @@ import com.shiftplanner.model.Employee;
 import com.shiftplanner.model.EmployeeRole;
 import com.shiftplanner.model.User;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  Carica dati di esempio nel database in-memory per la modalità Demo.
  Viene chiamato dal Main solo quando app.mode.demo=true.
  Senza questi dati l'algoritmo di generazione non produce turni perché la lista dipendenti è vuota.*/
 public final class DemoDataLoader {
+
+    private static final Logger LOGGER = Logger.getLogger(DemoDataLoader.class.getName());
 
     private DemoDataLoader() {
         throw new IllegalStateException("Utility class — non istanziare.");
@@ -33,8 +38,8 @@ public final class DemoDataLoader {
             daoFactory.getEmployeeDAO().saveEmployee(
                     new Employee(6, "Admin Coord",    EmployeeRole.COORDINATOR, 0));
 
-            System.out.println("[DEMO] Caricati 6 dipendenti di esempio.");
-            
+            LOGGER.info("[DEMO] Caricati 6 dipendenti di esempio.");
+
             // Account utente per il login
             // Coordinatore: username=admin, password=admin
             daoFactory.getUserDAO().saveUser(
@@ -51,13 +56,12 @@ public final class DemoDataLoader {
             daoFactory.getUserDAO().saveUser(
                     new User(6, "paolo", "paolo", 5, EmployeeRole.EMPLOYEE));
 
-            System.out.println("[DEMO] Caricati 6 account utente di esempio.");
-            System.out.println("[DEMO] Coordinatore → username: admin  password: admin");
-            System.out.println("[DEMO] Dipendente   → username: mario  password: mario (e così via)");
+            LOGGER.info("[DEMO] Caricati 6 account utente di esempio.");
+            LOGGER.info("[DEMO] Coordinatore → username: admin  password: admin");
+            LOGGER.info("[DEMO] Dipendente   → username: mario  password: mario (e così via)");
 
         } catch (DAOException e) {
-            System.err.println("[DEMO] Avviso: impossibile caricare i dati di esempio. " 
-                               + e.getMessage());
+            LOGGER.log(Level.WARNING, "[DEMO] Avviso: impossibile caricare i dati di esempio.", e);
         }
     }
 }
