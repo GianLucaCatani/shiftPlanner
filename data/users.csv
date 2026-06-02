@@ -1,0 +1,7 @@
+id,username,password,employeeId,role
+1,mario,mario,1,EMPLOYEE
+2,anna,anna,2,EMPLOYEE
+3,luca,luca,3,EMPLOYEE
+4,sara,sara,4,EMPLOYEE
+5,paolo,paolo,5,EMPLOYEE
+6,admin,admin,6,COORDINATOR

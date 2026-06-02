@@ -38,7 +38,12 @@ public class NotificationDAOFileSystem implements NotificationDAO {
         List<Notification> result = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
+            boolean isFirstLine = true;
             while ((line = br.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
                 String[] data = line.split(",", 3);
                 if (data.length == 3) {
                     long notifId = Long.parseLong(data[0].trim());

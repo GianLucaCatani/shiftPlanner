@@ -19,6 +19,7 @@ public class UserDAOFileSystem implements UserDAO {
 
     @Override
     public User getUserByCredentials(String username, String password) throws DAOException {
+    	
         List<User> users = loadAll();
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
