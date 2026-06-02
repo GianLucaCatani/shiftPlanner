@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.shiftplanner.controller.gui.fx.EmployeeDashboardGUIControllerFX"
+      spacing="0"
+      prefWidth="860"
+      prefHeight="640">
+
+    <!-- TOPBAR -->
+    <HBox style="-fx-background-color: #FFFFFF;
+                 -fx-border-color: #E0E0E0;
+                 -fx-border-width: 0 0 1 0;
+                 -fx-padding: 10 20 10 20;
+                 -fx-alignment: CENTER_LEFT;
+                 -fx-spacing: 8;">
+        <Label text="ShiftPlanner"
+               style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #1565C0;"/>
+        <Label text="Employee Portal"
+               style="-fx-font-size: 12; -fx-text-fill: #888;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="welcomeLabel"
+               style="-fx-font-size: 13; -fx-text-fill: #333;"/>
+        <Button text="Logout"
+                onAction="#onLogoutClicked"
+                style="-fx-background-color: transparent;
+                       -fx-text-fill: #555;
+                       -fx-border-color: #CCCCCC;
+                       -fx-border-radius: 4;
+                       -fx-padding: 4 10 4 10;"/>
+    </HBox>
+
+    <!-- Errore -->
+    <Label fx:id="errorLabel"
+           style="-fx-text-fill: red; -fx-font-weight: bold; -fx-padding: 4 20 0 20;"
+           visible="false"
+           wrapText="true"/>
+
+    <!-- AREA PRINCIPALE -->
+    <VBox spacing="16" style="-fx-padding: 20; -fx-background-color: #F5F6FA;"
+          VBox.vgrow="ALWAYS">
+
+        <!-- Pannello TURNI -->
+        <VBox spacing="8" VBox.vgrow="ALWAYS"
+              style="-fx-background-color: #FFFFFF;
+                     -fx-border-color: #E0E0E0;
+                     -fx-border-radius: 6;
+                     -fx-background-radius: 6;
+                     -fx-padding: 16;">
+            <Label text="My Schedule"
+                   style="-fx-font-size: 15; -fx-font-weight: bold;"/>
+            <TableView fx:id="shiftsTable" VBox.vgrow="ALWAYS">
+                <placeholder>
+                    <Label text="Nessun turno assegnato al momento."
+                           style="-fx-text-fill: #888; -fx-font-style: italic;"/>
+                </placeholder>
+                <columns>
+                    <TableColumn fx:id="dateColumn"      text="Data"   prefWidth="160"/>
+                    <TableColumn fx:id="slotColumn"      text="Slot"   prefWidth="120"/>
+                    <TableColumn fx:id="startTimeColumn" text="Inizio" prefWidth="100"/>
+                    <TableColumn fx:id="endTimeColumn"   text="Fine"   prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- Pannello NOTIFICHE -->
+        <VBox spacing="8"
+              style="-fx-background-color: #FFFFFF;
+                     -fx-border-color: #E0E0E0;
+                     -fx-border-radius: 6;
+                     -fx-background-radius: 6;
+                     -fx-padding: 16;">
+            <Label text="Recent Notifications"
+                   style="-fx-font-size: 15; -fx-font-weight: bold;"/>
+            <ListView fx:id="notificationsList" prefHeight="160" maxHeight="160"
+                      style="-fx-background-color: transparent;
+                             -fx-border-color: transparent;">
+                <placeholder>
+                    <Label text="Nessuna notifica."
+                           style="-fx-text-fill: #888; -fx-font-style: italic;"/>
+                </placeholder>
+            </ListView>
+        </VBox>
+
+    </VBox>
+
+</VBox>

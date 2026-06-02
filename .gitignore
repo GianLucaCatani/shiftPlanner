@@ -1,0 +1,16 @@
+# Credenziali database — non caricare
+src/main/resources/db.properties
+
+# Build output
+target/
+bin/
+*.class
+
+# File Eclipse
+.classpath
+.project
+.settings/
+
+# File di sistema
+.DS_Store
+Thumbs.db

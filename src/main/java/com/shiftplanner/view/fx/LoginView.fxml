@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.shiftplanner.controller.gui.fx.LoginGUIControllerFX"
+      spacing="16"
+      style="-fx-padding: 40; -fx-alignment: center;"
+      prefWidth="380"
+      prefHeight="300">
+
+    <!-- Titolo -->
+    <Label text="ShiftPlanner — Login"
+           style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+    <!-- Username -->
+    <HBox spacing="10" style="-fx-alignment: center-left;">
+        <Label text="Username:" minWidth="90"/>
+        <TextField fx:id="usernameField"
+                   promptText="Inserisci username"
+                   prefWidth="220"/>
+    </HBox>
+
+    <!-- Password -->
+    <HBox spacing="10" style="-fx-alignment: center-left;">
+        <Label text="Password:" minWidth="90"/>
+        <PasswordField fx:id="passwordField"
+                       promptText="Inserisci password"
+                       prefWidth="220"/>
+    </HBox>
+
+    <!-- Messaggio di errore -->
+    <Label fx:id="errorLabel"
+           style="-fx-text-fill: red; -fx-font-weight: bold;"
+           visible="false"
+           wrapText="true"/>
+
+    <!-- Bottone Login -->
+    <Button text="Accedi"
+            onAction="#onLoginClicked"
+            prefWidth="320"
+            style="-fx-background-color: #2196F3; -fx-text-fill: white;
+                   -fx-font-weight: bold; -fx-font-size: 14;"/>
+
+</VBox>

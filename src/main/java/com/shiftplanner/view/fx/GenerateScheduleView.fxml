@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.shiftplanner.controller.gui.fx.GenerateScheduleGUIControllerFX"
+      spacing="10"
+      style="-fx-padding: 20;"
+      prefWidth="800"
+      prefHeight="620">
+
+    <!-- Titolo -->
+    <Label text="ShiftPlanner — Generazione Turni"
+           style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <!-- FASE 1: Input periodo + bottone Genera Bozza -->
+    <HBox spacing="10" style="-fx-alignment: center-left;">
+        <Label text="Data Inizio (YYYY-MM-DD):" minWidth="180"/>
+        <TextField fx:id="startDateField"
+                   promptText="es. 2026-06-01"
+                   prefWidth="140"/>
+        <Label text="Data Fine (YYYY-MM-DD):" minWidth="160"/>
+        <TextField fx:id="endDateField"
+                   promptText="es. 2026-06-07"
+                   prefWidth="140"/>
+        <Button text="Genera Bozza"
+                onAction="#onGenerateClicked"
+                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Messaggi di feedback -->
+    <Label fx:id="errorLabel"
+           style="-fx-text-fill: red; -fx-font-weight: bold;"
+           visible="false"
+           wrapText="true"/>
+    <Label fx:id="successLabel"
+           style="-fx-text-fill: green; -fx-font-weight: bold;"
+           visible="false"
+           wrapText="true"/>
+
+    <!-- Tabella dei turni -->
+    <TableView fx:id="shiftsTable" VBox.vgrow="ALWAYS">
+        <placeholder>
+            <Label text="Inserisci le date e clicca 'Genera Bozza'"/>
+        </placeholder>
+        <columns>
+            <TableColumn fx:id="dateColumn"     text="Data"       prefWidth="110"/>
+            <TableColumn fx:id="slotColumn"     text="Slot"       prefWidth="100"/>
+            <TableColumn fx:id="startTimeColumn" text="Inizio"    prefWidth="80"/>
+            <TableColumn fx:id="endTimeColumn"  text="Fine"       prefWidth="80"/>
+            <TableColumn fx:id="employeeColumn" text="Dipendente" prefWidth="220"/>
+        </columns>
+    </TableView>
+
+    <!-- FASE 2: Modifica manuale del turno selezionato -->
+    <HBox spacing="10" style="-fx-alignment: center-left; -fx-padding: 4 0 0 0;">
+        <Label text="ID nuovo dipendente:" minWidth="160"/>
+        <TextField fx:id="employeeIdField"
+                   promptText="es. 3"
+                   prefWidth="80"/>
+        <Button text="Modifica Turno Selezionato"
+                onAction="#onModifyShiftClicked"
+                style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- FASE 3: Pubblica -->
+    <HBox spacing="10" style="-fx-alignment: center-left;">
+        <Button text="Pubblica Calendario"
+                onAction="#onPublishClicked"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+        <Label text="Pubblica la bozza e invia le notifiche ai dipendenti."
+               style="-fx-font-style: italic; -fx-text-fill: #555;"/>
+    </HBox>
+
+    <!-- Riepilogo -->
+    <Label fx:id="summaryLabel"
+           style="-fx-font-style: italic; -fx-text-fill: #555;"
+           visible="false"/>
+
+    <!-- Logout -->
+    <HBox style="-fx-alignment: center-right; -fx-padding: 4 0 0 0;">
+        <Button text="Logout"
+                onAction="#onLogoutClicked"
+                style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+</VBox>
