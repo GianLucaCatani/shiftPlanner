@@ -92,12 +92,12 @@ public class GenerateScheduleView {
     //Stampa il calendario generato in formato tabellare
     private void displaySchedule(ScheduleBean schedule) {
 
-        LOGGER.info(String.format("  Periodo : %s → %s%n",
+        LOGGER.info(() -> String.format("  Periodo : %s → %s%n",
                 schedule.getStartDate(), schedule.getEndDate()));
-        LOGGER.info(String.format("  Stato   : %s%n", schedule.getStatus()));
-        LOGGER.info(String.format("  Turni   : %d%n", schedule.getShifts().size()));
+        LOGGER.info(() -> String.format("  Stato   : %s%n", schedule.getStatus()));
+        LOGGER.info(() -> String.format("  Turni   : %d%n", schedule.getShifts().size()));
         LOGGER.info("----------------------------------------");
-        LOGGER.info(String.format("  %-12s %-10s %-8s %-8s %-20s%n",
+        LOGGER.info(() -> String.format("  %-12s %-10s %-8s %-8s %-20s%n",
                 "DATA", "SLOT", "INIZIO", "FINE", "DIPENDENTE"));
         LOGGER.info("----------------------------------------");
 
@@ -106,7 +106,7 @@ public class GenerateScheduleView {
                     ? shift.getEmployee().getFullName()
                     : "*** NON ASSEGNATO ***";
 
-            LOGGER.info(String.format("  %-12s %-10s %-8s %-8s %-20s%n",
+            LOGGER.info(() -> String.format("  %-12s %-10s %-8s %-8s %-20s%n",
                     shift.getDate(),
                     getSlotLabel(shift),
                     shift.getStartTime(),

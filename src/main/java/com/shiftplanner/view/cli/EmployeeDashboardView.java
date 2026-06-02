@@ -44,10 +44,10 @@ public class EmployeeDashboardView {
                 LOGGER.info("  Nessun turno assegnato al momento.");
                 return;
             }
-            LOGGER.info(String.format("  %-12s %-8s %-8s%n", "DATA", "INIZIO", "FINE"));
+            LOGGER.info(() -> String.format("  %-12s %-8s %-8s%n", "DATA", "INIZIO", "FINE"));
             LOGGER.info("  --------------------------------");
             for (ShiftBean shift : shifts) {
-                LOGGER.info(String.format("  %-12s %-8s %-8s%n",
+                LOGGER.info(() -> String.format("  %-12s %-8s %-8s%n",
                         shift.getDate(),
                         shift.getStartTime(),
                         shift.getEndTime()));
@@ -66,7 +66,7 @@ public class EmployeeDashboardView {
                 return;
             }
             for (NotificationBean n : notifications) {
-                LOGGER.info("  • " + n.getMessage());
+                LOGGER.info(() -> "  • " + n.getMessage());
             }
         } catch (ShiftPlannerException e) {
             LOGGER.log(Level.SEVERE, "Errore nel caricamento delle notifiche", e);

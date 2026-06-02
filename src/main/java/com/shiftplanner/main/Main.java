@@ -76,7 +76,7 @@ public class Main {
             }
 
         } catch (Exception e) {
-        	LOGGER.log(Level.SEVERE, "ERRORE FATALE all'avvio: " + e.getMessage(), e);
+        	LOGGER.log(Level.SEVERE, e, () -> "ERRORE FATALE all'avvio: " + e.getMessage());
         }
     }
 }

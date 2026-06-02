@@ -5,19 +5,21 @@ import com.shiftplanner.exceptions.dao.DAOException;
 import com.shiftplanner.model.Schedule;
 import com.shiftplanner.model.Shift;
 
-import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ScheduleDAOInMemory implements ScheduleDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(ScheduleDAOInMemory.class.getName());	
+    private static final Logger LOGGER = Logger.getLogger(ScheduleDAOInMemory.class.getName());
     private static final List<Schedule> DB = new ArrayList<>();
 
     @Override
     public void saveSchedule(Schedule schedule) throws DAOException {
         DB.add(schedule);
-        LOGGER.info("(DEMO) Schedule salvato in memoria RAM. Totale turni salvati: " + schedule.getShifts().size());
+        LOGGER.log(Level.INFO, "(DEMO) Schedule salvato in memoria RAM. Totale turni salvati: {0}",
+                schedule.getShifts().size());
     }
     
     @Override
@@ -30,7 +32,7 @@ public class ScheduleDAOInMemory implements ScheduleDAO {
         }
         return null;
     }
-    
+
     @Override
     public List<Shift> getShiftsByEmployeeId(long employeeId) throws DAOException {
         List<Shift> result = new ArrayList<>();
