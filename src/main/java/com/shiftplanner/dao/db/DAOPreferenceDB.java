@@ -29,27 +29,30 @@ public class DAOPreferenceDB implements PreferenceDAO {
         
         String query = "SELECT id, employee_id, pref_date, time_slot FROM preferences " +
                        "WHERE pref_date >= ? AND pref_date <= ?";
-                       
-        try (Connection conn = DBConnection.getInstance();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-             
-            stmt.setDate(1, java.sql.Date.valueOf(startDate));
-            stmt.setDate(2, java.sql.Date.valueOf(endDate));
-            
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    long id = rs.getLong("id");
-                    long employeeId = rs.getLong("employee_id");
-                    LocalDate prefDate = rs.getDate("pref_date").toLocalDate();
-                    TimeSlot slot = TimeSlot.valueOf(rs.getString("time_slot").toUpperCase());
-                    
-                    Employee emp = this.employeeDAO.getEmployeeById(employeeId);
-                    
-                    if (emp != null) {
-                        preferences.add(new EmployeePreference(id, prefDate, slot, emp));
+        
+        Connection conn = null;
+        try {
+        	conn = DBConnection.getInstance();
+        	try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        		
+        		stmt.setDate(1, java.sql.Date.valueOf(startDate));
+                stmt.setDate(2, java.sql.Date.valueOf(endDate));
+                
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        long id = rs.getLong("id");
+                        long employeeId = rs.getLong("employee_id");
+                        LocalDate prefDate = rs.getDate("pref_date").toLocalDate();
+                        TimeSlot slot = TimeSlot.valueOf(rs.getString("time_slot").toUpperCase());
+                        
+                        Employee emp = this.employeeDAO.getEmployeeById(employeeId);
+                        
+                        if (emp != null) {
+                            preferences.add(new EmployeePreference(id, prefDate, slot, emp));
+                        }
                     }
                 }
-            }
+        	}
         } catch (SQLException e) {
             throw new DAOException("Errore nel recupero delle preferenze dal DB", e);
         }

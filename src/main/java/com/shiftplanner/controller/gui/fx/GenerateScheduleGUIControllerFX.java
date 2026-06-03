@@ -202,6 +202,20 @@ public class GenerateScheduleGUIControllerFX {
         }
     }
 
+    @FXML
+    private void onDiscardDraftClicked() {
+        hideMessages();
+        if (currentDraftId < 0) {
+            showError("Nessuna bozza da scartare.");
+            return;
+        }
+        // Resetta la tabella e l'ID
+        shiftsTable.getItems().clear();
+        currentDraftId = -1;
+        summaryLabel.setVisible(false);
+        showSuccess("Bozza scartata. Puoi generare un nuovo calendario.");
+    }
+
     //Popola la TableView con i turni del calendario generato.
     private void displaySchedule(ScheduleBean schedule) {
         ObservableList<ShiftRow> rows = FXCollections.observableArrayList();

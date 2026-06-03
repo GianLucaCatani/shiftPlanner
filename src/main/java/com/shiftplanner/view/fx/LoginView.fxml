@@ -1,45 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.shiftplanner.controller.gui.fx.LoginGUIControllerFX"
-      spacing="16"
-      style="-fx-padding: 40; -fx-alignment: center;"
-      prefWidth="380"
-      prefHeight="300">
+<!-- ============================================================
+     LOGIN VIEW — stile card centrata su sfondo grigio chiaro
+     ============================================================ -->
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.shiftplanner.controller.gui.fx.LoginGUIControllerFX"
+           style="-fx-background-color: #F0F2F5;"
+           prefWidth="700"
+           prefHeight="500">
 
-    <!-- Titolo -->
-    <Label text="ShiftPlanner — Login"
-           style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+    <!-- Card bianca centrata -->
+    <VBox spacing="0"
+          style="-fx-background-color: #FFFFFF;
+                 -fx-background-radius: 10;
+                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 18, 0, 0, 4);
+                 -fx-padding: 40 48 36 48;"
+          prefWidth="340"
+          maxWidth="340">
 
-    <!-- Username -->
-    <HBox spacing="10" style="-fx-alignment: center-left;">
-        <Label text="Username:" minWidth="90"/>
+        <!-- Titolo ShiftPlanner -->
+        <Label text="ShiftPlanner"
+               style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: #1A202C;
+                      -fx-alignment: CENTER;"
+               maxWidth="Infinity"/>
+
+        <!-- Sottotitolo -->
+        <Label text="Employee Shift Management System"
+               style="-fx-font-size: 12; -fx-text-fill: #718096;
+                      -fx-alignment: CENTER; -fx-padding: 2 0 28 0;"
+               maxWidth="Infinity"/>
+
+        <!-- Label Username -->
+        <Label text="Username"
+               style="-fx-font-size: 13; -fx-text-fill: #2D3748;
+                      -fx-font-weight: bold; -fx-padding: 0 0 6 0;"/>
+
+        <!-- Campo Username -->
         <TextField fx:id="usernameField"
-                   promptText="Inserisci username"
-                   prefWidth="220"/>
-    </HBox>
+                   promptText="Enter username"
+                   style="-fx-background-color: #FFFFFF;
+                          -fx-border-color: #CBD5E0;
+                          -fx-border-radius: 5;
+                          -fx-background-radius: 5;
+                          -fx-font-size: 13;
+                          -fx-padding: 10 12 10 12;"
+                   maxWidth="Infinity"/>
 
-    <!-- Password -->
-    <HBox spacing="10" style="-fx-alignment: center-left;">
-        <Label text="Password:" minWidth="90"/>
+        <!-- Spazio -->
+        <Region prefHeight="14"/>
+
+        <!-- Label Password -->
+        <Label text="Password"
+               style="-fx-font-size: 13; -fx-text-fill: #2D3748;
+                      -fx-font-weight: bold; -fx-padding: 0 0 6 0;"/>
+
+        <!-- Campo Password -->
         <PasswordField fx:id="passwordField"
-                       promptText="Inserisci password"
-                       prefWidth="220"/>
-    </HBox>
+                       promptText="Enter password"
+                       style="-fx-background-color: #FFFFFF;
+                              -fx-border-color: #CBD5E0;
+                              -fx-border-radius: 5;
+                              -fx-background-radius: 5;
+                              -fx-font-size: 13;
+                              -fx-padding: 10 12 10 12;"
+                       maxWidth="Infinity"/>
 
-    <!-- Messaggio di errore -->
-    <Label fx:id="errorLabel"
-           style="-fx-text-fill: red; -fx-font-weight: bold;"
-           visible="false"
-           wrapText="true"/>
+        <!-- Messaggio di errore -->
+        <Label fx:id="errorLabel"
+               style="-fx-text-fill: #E53E3E; -fx-font-size: 12;
+                      -fx-padding: 8 0 0 0;"
+               visible="false"
+               wrapText="true"
+               maxWidth="Infinity"/>
 
-    <!-- Bottone Login -->
-    <Button text="Accedi"
-            onAction="#onLoginClicked"
-            prefWidth="320"
-            style="-fx-background-color: #2196F3; -fx-text-fill: white;
-                   -fx-font-weight: bold; -fx-font-size: 14;"/>
+        <!-- Spazio prima del bottone -->
+        <Region prefHeight="18"/>
 
-</VBox>
+        <!-- Bottone Login -->
+        <Button text="Login"
+                onAction="#onLoginClicked"
+                maxWidth="Infinity"
+                style="-fx-background-color: #3B82F6;
+                       -fx-text-fill: #FFFFFF;
+                       -fx-font-weight: bold;
+                       -fx-font-size: 14;
+                       -fx-background-radius: 5;
+                       -fx-padding: 11 0 11 0;
+                       -fx-cursor: hand;"/>
+
+
+
+    </VBox>
+</StackPane>
