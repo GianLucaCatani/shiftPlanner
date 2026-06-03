@@ -29,16 +29,17 @@ public class DAOAbsenceDB implements AbsenceDAO {
         
         String query = "SELECT id, employee_id, start_date, end_date, type FROM absences " +
                        "WHERE NOT (end_date < ? OR start_date > ?)";
+                       
+        java.sql.Date sqlStartDate = java.sql.Date.valueOf(startDate);
+        java.sql.Date sqlEndDate = java.sql.Date.valueOf(endDate);
            
-        Connection conn = null;
         try {
-            conn = DBConnection.getInstance();
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            	// JDBC richiede java.sql.Date, quindi convertiamo i nostri LocalDate
-                stmt.setDate(1, java.sql.Date.valueOf(startDate));
-                stmt.setDate(2, java.sql.Date.valueOf(endDate));
+            Connection connection = DBConnection.getInstance();
+            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                pstmt.setDate(1, sqlStartDate);
+                pstmt.setDate(2, sqlEndDate);
                 
-                try (ResultSet rs = stmt.executeQuery()) {
+                try (ResultSet rs = pstmt.executeQuery()) {
                     while (rs.next()) {
                         long id = rs.getLong("id");
                         long employeeId = rs.getLong("employee_id");

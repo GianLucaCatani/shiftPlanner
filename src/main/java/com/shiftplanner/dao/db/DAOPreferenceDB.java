@@ -30,11 +30,9 @@ public class DAOPreferenceDB implements PreferenceDAO {
         String query = "SELECT id, employee_id, pref_date, time_slot FROM preferences " +
                        "WHERE pref_date >= ? AND pref_date <= ?";
         
-        Connection conn = null;
         try {
-        	conn = DBConnection.getInstance();
+        	Connection conn = DBConnection.getInstance();
         	try (PreparedStatement stmt = conn.prepareStatement(query)) {
-        		
         		stmt.setDate(1, java.sql.Date.valueOf(startDate));
                 stmt.setDate(2, java.sql.Date.valueOf(endDate));
                 
