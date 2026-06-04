@@ -222,7 +222,7 @@ public class GenerateScheduleGUIControllerFX {
 
         for (ShiftBean shift : schedule.getShifts()) {
             String employeeName = (shift.getEmployee() != null)
-                    ? shift.getEmployee().getFullName()
+                    ? "[ID: " + shift.getEmployee().getEmployeeId() + "] " + shift.getEmployee().getFullName()
                     : "*** NON ASSEGNATO ***";
 
             rows.add(new ShiftRow(
