@@ -13,7 +13,7 @@ public class Notification {
         this.notificationId = notificationId;
         this.employeeId = employeeId;
         this.message = message;
-        this.createAt = LocalDateTime.now(ZoneId.systemDefault());
+        this.createAt = LocalDateTime.now(ZoneId.systemDefault()); //ZoneId.systemDefault() dice esplicitamente "usa il fuso orario del sistema dove gira l'app"
     }
     
     public long getNotificationId() { return notificationId; }
