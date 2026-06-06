@@ -82,17 +82,6 @@ app.mode.demo=false
 app.persistence.type=fs
 ```
 
-**Set Up MySQL Database (only for `app.persistence.type=db`):**
-
-Ensure MySQL is installed. Create the file `src/main/resources/db.properties`:
-```properties
-CONNECTION_URL=jdbc:mysql://localhost:3306/shiftplanner
-USER=your_database_user
-PASS=your_database_password
-```
-
-Then run the SQL script `create_users_table.sql` to create and populate the tables.
-
 **Build and Run the Application**
 ## Demo Credentials
 
