@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,9 +117,9 @@ public class DAOScheduleDB implements ScheduleDAO {
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         long shiftId = rs.getLong("id");
-                        java.time.LocalDate date = rs.getDate("shift_date").toLocalDate();
-                        java.time.LocalTime start = rs.getTime("start_time").toLocalTime();
-                        java.time.LocalTime end   = rs.getTime("end_time").toLocalTime();
+                        LocalDate date = rs.getDate("shift_date").toLocalDate();
+                        LocalTime start = rs.getTime("start_time").toLocalTime();
+                        LocalTime end   = rs.getTime("end_time").toLocalTime();
                         long empId   = rs.getLong("emp_id");
                         String name  = rs.getString("full_name");
                         com.shiftplanner.model.EmployeeRole role =
@@ -125,7 +127,14 @@ public class DAOScheduleDB implements ScheduleDAO {
                         int hours    = rs.getInt("contract_hours");
                         com.shiftplanner.model.Employee emp =
                                 new com.shiftplanner.model.Employee(empId, name, role, hours);
-                        result.add(new Shift(shiftId, date, start, end, emp));
+                                
+                        // Costringiamo anche il DAO a passare attraverso un "Tutto" per ricreare le sue "Parti"
+                        com.shiftplanner.model.Schedule dummySchedule = 
+                                new com.shiftplanner.model.Schedule(0, java.time.LocalDate.MIN, java.time.LocalDate.MAX);
+                        dummySchedule.createAndAddShift(shiftId, date, start, end, emp);
+                        
+                        // Estraiamo il turno appena creato e lo aggiungiamo ai risultati
+                        result.add(dummySchedule.getShifts().get(0));
                     }
                 }
             }

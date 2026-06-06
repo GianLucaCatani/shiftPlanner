@@ -10,7 +10,9 @@ public class Shift {
     private LocalTime endTime;
     private Employee employee;
     
-    public Shift(long shiftId, LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
+    // Costruttore package-private (niente 'public').
+    // In questo modo, SOLO le classi nello stesso package (es. Schedule) possono istanziare uno Shift. Nessun altro può farlo!
+    Shift(long shiftId, LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
         this.shiftId = shiftId;
         this.date = date;
         this.startTime = startTime;

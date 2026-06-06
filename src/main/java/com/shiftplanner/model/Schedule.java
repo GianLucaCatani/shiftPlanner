@@ -1,6 +1,7 @@
 package com.shiftplanner.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,8 +47,11 @@ public class Schedule extends Subject {
     	return Collections.unmodifiableList(shifts); 
     }
     
-    public void addShift(Shift shift) {
-        this.shifts.add(shift);
+    // Composizione
+    // Nessun altro può aggiungere un turno già istanziato dall'esterno.
+    public void createAndAddShift(long shiftId, LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
+        Shift newShift = new Shift(shiftId, date, startTime, endTime, employee);
+        this.shifts.add(newShift);
     }
     public void removeShift(Shift shift) {
         this.shifts.remove(shift);

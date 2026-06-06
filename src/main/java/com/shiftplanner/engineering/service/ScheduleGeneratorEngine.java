@@ -173,8 +173,8 @@ public class ScheduleGeneratorEngine {
         LocalTime startTime = getStartTime(slot);
         LocalTime endTime = startTime.plusHours(SHIFT_DURATION_HOURS);
         
-        Shift shift = new Shift(0, date, startTime, endTime, emp);
-        schedule.addShift(shift);
+        // Invece di creare lo Shift qua e passarlo, diamo i dati allo Schedule affinché lo crei lui (rispettando la Composizione).
+        schedule.createAndAddShift(0, date, startTime, endTime, emp);
         
         // Aggiorna le ore settimanali lavorate
         addWeeklyHours(weeklyHoursMap, emp.getEmployeeId(), date);
