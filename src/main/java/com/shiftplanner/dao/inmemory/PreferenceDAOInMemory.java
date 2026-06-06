@@ -22,14 +22,4 @@ public class PreferenceDAOInMemory implements PreferenceDAO {
                 })
                 .toList();
     }
-    
-    //Aggiunge una preferenza in memoria.
-    public static void addPreference(EmployeePreference preference) {
-        DB.add(preference);
-    }
-
-    //Svuota il database. Utile nei test per garantire l'isolamento.
-    public static void clear() {
-        DB.clear();
-    }
 }
