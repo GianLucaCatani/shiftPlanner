@@ -4,6 +4,7 @@ import com.shiftplanner.engineering.service.ScheduleGeneratorEngine;
 import com.shiftplanner.model.*;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +17,7 @@ class ScheduleGeneratorEngineTest {
     @Test
     void generateShifts_withEmployees_creates3Shift() {
         // GIVEN: un calendario di 1 giorno con 3 dipendenti disponibili
-        LocalDate giorno = LocalDate.of(2026, 6, 1);
+        LocalDate giorno = LocalDate.of(2026, Month.JUNE, 1);
         Schedule schedule = new Schedule(1L, giorno, giorno);
 
         List<Employee> employees = new ArrayList<>();
@@ -39,7 +40,7 @@ class ScheduleGeneratorEngineTest {
     @Test
     void generateShifts_noEmployees_createNoShifts() {
         // GIVEN: lista dipendenti vuota
-        LocalDate giorno = LocalDate.of(2026, 6, 1);
+        LocalDate giorno = LocalDate.of(2026, Month.JUNE, 1);
         Schedule schedule = new Schedule(1L, giorno, giorno);
         List<Employee> employees = new ArrayList<>();
 

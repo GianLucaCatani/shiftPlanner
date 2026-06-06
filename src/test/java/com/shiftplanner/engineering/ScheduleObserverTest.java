@@ -4,6 +4,7 @@ import com.shiftplanner.engineering.observer.Observer;
 import com.shiftplanner.model.Schedule;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.time.Month;
 import static org.junit.jupiter.api.Assertions.*;
 
 /*Verifica del Pattern Observer.
@@ -14,8 +15,8 @@ class ScheduleObserverTest {
     void publish_notifiesRegisteredObserver() {
         // GIVEN: un calendario e un Observer "spia" che conta le notifiche
         Schedule schedule = new Schedule(1L,
-                LocalDate.of(2026, 6, 1),
-                LocalDate.of(2026, 6, 7));
+                LocalDate.of(2026, Month.JUNE, 1),
+                LocalDate.of(2026, Month.JUNE, 7));
 
         // Usiamo una variabile array per aggirare il limite "effectively final" di Java
         int[] contatoreNotifiche = {0};
@@ -36,8 +37,8 @@ class ScheduleObserverTest {
     void publish_alreadyPublished_throwsException() {
         // GIVEN: un calendario già pubblicato
         Schedule schedule = new Schedule(1L,
-                LocalDate.of(2026, 6, 1),
-                LocalDate.of(2026, 6, 7));
+                LocalDate.of(2026, Month.JUNE, 1),
+                LocalDate.of(2026, Month.JUNE, 7));
         schedule.publish();
 
         // WHEN + THEN: pubblicare di nuovo deve lanciare IllegalStateException

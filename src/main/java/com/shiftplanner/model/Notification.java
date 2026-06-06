@@ -1,6 +1,7 @@
 package com.shiftplanner.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class Notification {
 	private long notificationId;
@@ -12,7 +13,7 @@ public class Notification {
         this.notificationId = notificationId;
         this.employeeId = employeeId;
         this.message = message;
-        this.createAt = LocalDateTime.now();
+        this.createAt = LocalDateTime.now(ZoneId.systemDefault());
     }
     
     public long getNotificationId() { return notificationId; }
